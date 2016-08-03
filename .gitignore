@@ -87,3 +87,14 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# MagiCircles
+env/
+stardustrun_project/local_settings.py
+stardustrun_project/generated_settings.py
+stardustrun/static/bower
+stardustrun/static/css/style.css
+stardustrun/templates/pages/map.html
+collected/
+db.sqlite3
+stardustrun/static/uploaded/
