@@ -1,57 +1,26 @@
 @import "main.less";
 @import "mixins/buttons.less";
 @import "mixins/a.less";
+@import url(https://fonts.googleapis.com/css?family=Lato:400,900);
 
-@mainColor: #4a86e8;
-@secondaryColor: #73c024;
+@mainColor: #49d6b5;
+@secondaryColor: #3664a8;
+
+html {
+    .setup-sidebar(@mainColor);
+    .magicircles(@mainColor, @secondaryColor);
+}
 
 body {
-    .setup-sidebar(@mainColor);
+    font-family: 'Lato', sans-serif;
 }
 
-.table-color(@color, @inverse) {
-    td {
-	background-color: @color;
-	color: @inverse;
-	.a-variant(@inverse);
-    }
-}
-.table-main { .table-color(@mainColor, #fff); }
-.table-dark { .table-color(darken(@mainColor, 15%), #fff); }
-
-a {
-    color: @mainColor;
-    &:hover, &:focus {
-	color: darken(@mainColor, 15%);
-    }
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 900;
 }
 
-.panel-main { .custom-panel(darken(@mainColor, 25%)); }
-
-.text-main { color: @mainColor; }
-.text-secondary { color: @secondaryColor; }
-
-.btn-main { .button-variant(white, @mainColor, darken(@mainColor, 5%)); }
-.btn-secondary { .button-variant(white, @secondaryColor, darken(@secondaryColor, 5%)); }
-
-
-.table-buttons td {
-    .button-variant(white, @mainColor, darken(@mainColor, 5%));
-}
-
-.navbar-main {
-    .navbar-variant(@mainColor, white);
-}
-
-.cuteform-elt.cuteform-selected {
-    border-color: @secondaryColor;
-}
-
-.pagination>li>a, .pagination>li>span {
-    color: @mainColor;
-}
-
-.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
-    background-color: @mainColor;
-    border-color: @mainColor;
+.current-index {
+    background: url('../img/background.png');
+    background-position: center center;
+    background-size: 100%;
 }
