@@ -4,8 +4,8 @@
   "authors": [
     "db0company <db0company@gmail.com>"
   ],
-  "description": "Database and community for Sample Game players.",
-  "license": "Simple non code license (SNCL)",
+  "description": "Pokemon GO Sharing Community",
+  "license": "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License",
   "dependencies": {
     "Autolinker.js": "0.15.2",
     "CuteForm": "~0.0.3",

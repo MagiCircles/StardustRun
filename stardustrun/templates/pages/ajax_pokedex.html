@@ -1,0 +1,29 @@
+{% load i18n %}
+{% load tools %}
+<div class="pokedex-buttons">
+  {% if view == 'list' %}
+  <a href="#changeToIcons" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Change to icons' %}"><img src="{{ static_url }}img/icons_button.png"></a>
+  {% else %}
+  <a href="#changeToList" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Change to list' %}"><img src="{{ static_url }}img/list_button.png"></a>
+  {% endif %}
+  <a href="/user/{{ account.cached_owner.id }}/{{ account.cached_owner.username }}/?account{{ account.id }}=Pokedex#{{ account.id }}" class="btn-pokemon" data-toggle="tooltip" title="{% trans 'Permalink' %}"><i class="flaticon-link"></i></a>
+</div>
+<div class="full-pokedex">
+  {% if view == 'list' %}
+  {% for pokedex in pokedexes %}
+  {% include 'include/pokedex.html' with pokemon=pokedex.pokemon %}
+  {% endfor %}
+  {% else %}
+  <div class="row items">
+    {% for pokedex in pokedexes %}
+    {% if forloop.counter0 != 0 and forloop.counter0|mod:4 %}
+  </div><div class="row items">
+    {% endif%}
+    <div class="col-md-3">
+      {% include 'include/pokedex.html' with pokemon=pokedex.pokemon %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>
+<script src="{{ static_url }}js/full_pokemon.js"></script>

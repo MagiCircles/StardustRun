@@ -1,0 +1,21 @@
+{% load web_tags %}
+{% load i18n %}
+<div class="row">
+  {% for team_name, localized_name, css_name in teams %}
+  {% if current_team != team_name %}
+  <div class="col-md-4">
+    <a href="/accounts/?team={{ team_name }}" class="btn btn-{{ css_name }} btn-block btn-xl">
+      <small>{% trans 'Leaderboard' %}</small><br>
+      <span class="fontx1-5">{% trans localized_name %}</span>
+    </a>
+  </div>
+  {% endif %}
+  {% endfor %}
+</div>
+<script>
+  var starters_images = {
+    {% for starter_id, starter_image in starters_images %}
+    '{{ starter_id }}': '{{ starter_image|imageURL }}',
+    {% endfor %}
+  };
+</script>

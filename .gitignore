@@ -88,6 +88,10 @@ ENV/
 # Rope project settings
 .ropeproject
 
+# Emacs
+#*#
+*~
+
 # MagiCircles
 env/
 stardustrun_project/local_settings.py
@@ -98,3 +102,8 @@ stardustrun/templates/pages/map.html
 collected/
 db.sqlite3
 stardustrun/static/uploaded/
+
+# StardustRun
+
+/pokemonattacks.html
+/pokemons.html

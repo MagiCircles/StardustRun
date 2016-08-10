@@ -1,0 +1,42 @@
+{% load i18n %}
+{% load tools %}
+{% with attack=item %}
+<div class="attack-item">
+  <h4 class="attack-name" style="background-image: url('{{ static_url }}img/background_types_pattern/{{ attack.type }}.png');">
+    <a href="/attacks/?type={{ attack.type }}" class="label label-default pull-right" style="background-color: {{ attack.type_data.color }}" target="_blank">{{ attack.type_data.name }}</a>
+    {% if attack.is_special %}<i class="fontx1-5 flaticon-idolized"></i>{% endif %}
+    <span class="attack-name-string">{% trans attack.name %}</span>
+  </h4>
+  <table class="table text-center table-vertical attack-table">
+    <tr>
+      {% if attack.is_special %}<th>{% trans 'Special Attack' %}</th>{% endif %}
+      <th>{% trans 'Damage' %}</th>
+      <th>{% trans 'Duration' %}</th>
+      {% if not attack.is_special %}<th>{% trans 'Energy Increase' %}</th>{% endif %}
+      {% if attack.is_special %}<th>{% trans 'Critical Hit Chance' %}</th>{% endif %}
+      {% if attack.is_special %}<th>{% trans 'Energy Requirement' %}</th>{% endif %}
+      <td rowspan="2" class="attack-buttons">
+	<a href="/pokemons/?attack={{ attack.id }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'All Pokémons with this attack' %}" target="_blank"><i class="flaticon-album"></i></a>
+	{% if in_full_pokemon %}
+	<a href="/attacks/" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'All Attacks' %}" target="_blank"><i class="flaticon-index"></i></a>
+	{% endif %}
+	{% if user.is_staff %}
+	<a href="/attacks/edit/{{ attack.id }}/" class="btn-pokemon"><i class="flaticon-edit"></i></a>
+	{% endif %}
+      </td>
+    </tr>
+    <tr>
+      {% if attack.is_special %}<td><i class="fontx1-5 flaticon-idolized"></i></td>{% endif %}
+      <td>{{ attack.damage }}</td>
+      <td>{{ attack.duration }} {% trans 'seconds' %}</td>
+      {% if not attack.is_special %}<td>{{ attack.energy_increase }}</td>{% endif %}
+      {% if attack.is_special %}<td>{{ attack.critical_hit_chance }}%</td>{% endif %}
+      {% if attack.is_special %}<td>
+	{% for _ in attack.energy_requirement|get_range %}
+	<div class="label label-info"></div>
+	{% endfor %}
+      </td>{% endif %}
+    </tr>
+  </table>
+</div>
+{% endwith %}

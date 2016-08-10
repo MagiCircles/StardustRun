@@ -1,0 +1,53 @@
+{# variables: account, pokemon, pokedex #}
+{% load i18n %}
+{% load web_tags %}
+{% if not hide_account %}
+<h3 class="full-pokemon-account team-{{ account.team }}">
+  <span class="inner">
+    <span class="nickname">{{ account.nickname }}</span>
+    <span class="level pull-right">Lv. {{ account.level }}</span>
+  </span>
+</h3>
+{% endif %}
+{% if not_editable %}
+<a href="{{ 'pokemon'|itemURL:pokemon }}" class="a-nodifference">
+  {% endif %}
+  <div class="full-pokemon-pokedex{% if view == 'icons' %} icons-view{% endif %}{% if not_editable %} not-editable-pokedex{% endif %}" data-pokemon="{{ pokemon.id }}" data-account="{{ account.id }}">
+    <div class="row">
+      <div class="col-sm-{% if view == 'icons' %}12{% else %}{% if hide_account %}2{% else %}3{% endif %}{% endif %}">
+	<img src="{{ pokemon.image|imageURL }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image pokemon-image-change-seen{% if not pokedex.seen %} not-seen{% endif %}">
+      </div>
+      {% if view != 'icons' %}
+      <div class="col-sm-3">
+	<span class="pokedex-title">{% trans 'Seen' %}</span>
+	<i class="change-seen flaticon-{% if pokedex.seen %}checked{% else %}delete{% endif %}"></i>
+      </div>
+      <div class="col-sm-3">
+	<span class="pokedex-title">{% trans 'Caught' %}</span>
+	<i class="change-caught flaticon-{% if pokedex.caught %}checked{% else %}delete{% endif %}"></i>
+      </div>
+      <div class="col-sm-3">
+	<form method="POST" action="/ajax/change_candies/{{ pokemon.id }}/{{ account.id }}/" class="candiesform">
+	  {% csrf_token %}
+	  <span class="pokedex-title">{% trans 'Candies' %}</span>
+	  <span class="total-candies">
+	    <input type="number" name="candies" value="{{ pokedex.candies }}" min="0"><br>
+	  </span><span class="total-candies-image">
+	    <img src="{{ static_url }}img/candy-background.png" alt="{% trans 'Candies' %}" style="background-color: {{ pokemon.main_type_data.color }};{% if not pokedex.candies %} display: none;{% endif %}" class="with-background">
+	    <img src="{{ static_url }}img/candy.png" alt="{% trans 'Candies' %}" style="{% if pokedex.candies %}display: none;{% endif %}" class="without-background">
+	  </span>
+	  <i class="flaticon-loading" style="display: none;"></i>
+	  <input type="submit" value="{% trans 'Apply Changes' %}" class="btn btn-sm btn-{{ account.team }}" style="display: none;">
+	</form>
+      </div>
+      {% if hide_account %}
+      <div class="col-sm-1">
+	<a href="{{ 'pokemon'|itemURL:pokemon }}" class="inline-block a-nodifference fontx2 text-center padding20" target="_blank" data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}" data-ajax-title="{% trans pokemon.name %}"><i class="text-muted flaticon-about"></i></a>
+      </div>
+      {% endif %}
+      {% endif %}
+    </div>
+  </div>
+  {% if not_editable %}
+</a>
+{% endif %}

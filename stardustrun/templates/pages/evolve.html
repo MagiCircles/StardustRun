@@ -1,0 +1,17 @@
+{% extends 'form.html' %}
+{% load i18n %}
+{% load web_tags %}
+{% block imagetitle %}
+<img src="{{ static_url }}img/evolve.png">
+{% endblock %}
+{% block title %}{% trans 'Evolve' %} {{ op.force_nickname }}{% endblock %}
+{% block belowform %}
+<script>
+  var evolved_ownedpokemon = {{ op.id }};
+  var evolution_images = {
+    {% for id, data in evolution_data %}
+    '{{ id }}': '{{ data.image|imageURL }}',
+    {% endfor %}
+  };
+</script>
+{% endblock %}

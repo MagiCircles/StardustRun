@@ -1,0 +1,8 @@
+<script>
+  var pokemon_types_html = {
+  '': '<img src="{{ static_url }}img/{{ empty_image }}">',
+  {% for type, info in pokemon_types.items %}
+  '{{ type }}': '<span class="label label-default" style="background-color: {{ info.color }}">{{ info.name }}</span>',
+  {% endfor %}
+  };
+</script>

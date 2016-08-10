@@ -1,0 +1,30 @@
+{% load i18n %}
+{% load tools %}
+{% load web_tags %}
+{% with op=item %}
+<div class="ownedpokemon" id="ownedpokemon{{ op.id }}" data-ownedpokemon-id="{{ op.id }}" data-ownedpokemon-account-id="{{ op.account_id }}">
+  <span class="cp-title">{% trans 'CP' %}</span> <span class="cp">{% if op.cp %}{{ op.cp }}{% else %}??{% endif %}</span>
+  <a href="{{ op.cached_pokemon.item_url }}"{% if ajax and not in_full_pokemon %} data-ajax-url="{{ op.cached_pokemon.ajax_item_url }}" data-ajax-title="{{ op.force_nickname }}"{% endif %}>
+    <img src="{{ op.cached_pokemon.image|imageURL }}" alt="{% trans op.cached_pokemon.name %}" class="img-responsive">
+  </a>
+  <h5 class="pokemon-nickname">{{ op.force_nickname }}</h5>
+  <div class="text-center">
+    {% if op.is_mine %}<a href="/ownedpokemons/edit/{{ op.id }}/{% if back_to_profile %}?back_to_profile{% endif %}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{% trans 'Edit' %} {{ op.force_nickname }}" data-ajax-url="/ajax/ownedpokemons/edit/{{ op.id }}/" data-ajax-handle-form="true" data-ajax-title="{{ op.force_nickname }}"><i class="flaticon-edit"></i></a>{% endif %}
+    {% if op.is_mine and op.can_evolve %}<a href="/evolve/{{ op.id }}/{% if back_to_profile %}?back_to_profile{% endif %}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{% trans 'Evolve' %} {{ op.force_nickname }}" data-ajax-url="/ajax/evolve/{{ op.id }}/" data-ajax-handle-form="true" data-ajax-title="{{ op.force_nickname }}"><i class="flaticon-toggler"></i></a>{% endif %}
+    {% if op.hp or op.weight or op.height or op.cached_attack or op.cached_special_attack %}
+    <span data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{% trans 'More info' %}" class="inline-block"><a href="#ownedpokemondetails{{ op.id }}" data-toggle="collapse" class="btn-pokemon"><i class="flaticon-more"></i></a>
+    {% endif %}
+  </div>
+  <div class="ownedpokemon-details collapse" id="ownedpokemondetails{{ op.id }}">
+    <ul class="list-group">
+      {% if op.hp %}<li class="list-group-item"><strong>{% trans 'HP' %} </strong><span class="pull-right">{{ op.hp }}</span></li>{% endif %}
+      {% if op.weight %}<li class="list-group-item"><strong>{% trans 'Weight' %} </strong><span class="pull-right">{{ op.weight }} kg</span></li>{% endif %}
+      {% if op.height %}<li class="list-group-item"><strong>{% trans 'Height' %} </strong><span class="pull-right">{{ op.height }} m</span></li>{% endif %}
+      {% if op.cached_attack %}<li class="list-group-item"><strong>{% trans 'Attack' %} </strong>
+	<span class="pull-right"><a href="/pokemons/?attack={{ op.cached_attack.id }}">{{ op.cached_attack.name }}</a></span></li>{% endif %}
+      {% if op.cached_special_attack %}<li class="list-group-item"><strong>{% trans 'Special Attack' %} </strong>
+	<span class="pull-right"><a href="/pokemons/?attack={{ op.cached_special_attack.id}}">{{ op.cached_special_attack.name }}</a></span></li>{% endif %}
+    </ul>
+  </div>
+</div>
+{% endwith %}

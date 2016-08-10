@@ -1,1 +1,3 @@
 git+https://github.com/SchoolIdolTomodachi/MagiCircles.git
+beautifulsoup4
+html5lib
