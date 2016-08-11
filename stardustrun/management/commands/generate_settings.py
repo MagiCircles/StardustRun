@@ -51,9 +51,9 @@ GENERATED_DATE = datetime.datetime.fromtimestamp(' + unicode(time.time()) + u')\
     print s
     filename = django_settings.BASE_DIR + '/' + django_settings.SITE + '_project/generated_settings.py'
     print filename
-    with open(filename, 'w') as f:
-        print >> f, s
-        f.close()
+    f = open(filename, 'w')
+    print >> f, s
+    f.close()
 
 class Command(BaseCommand):
     can_import_settings = True
