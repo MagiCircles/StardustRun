@@ -173,22 +173,20 @@ LOCALE_PATHS.append(os.path.join(BASE_DIR, SITE, 'locale'))
 if STATIC_UPLOADED_FILES_PREFIX is None:
     STATIC_UPLOADED_FILES_PREFIX = SITE + '/static/uploaded/' if DEBUG else 'u/'
 
-DEBUG_LOG = "/var/log/django/django_debug.log"
+DEBUG_LOG = "/var/log/django/django_debug.log" if not DEBUG else "/tmp/django_debug.log"
+
 LOGGING = {
-    'version': 1,
     'disable_existing_loggers': False,
-    # How to format the output
-    'formatters': {
-        'standard': {
-            'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
-            'datefmt' : "%d/%b/%Y %H:%M:%S"
-        },
+    'version': 1,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
     },
-    # Log handlers (where to go)
     'handlers': {
-        'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
+        'console': {
+            'class': 'logging.StreamHandler',
+            'level': 'DEBUG',
         },
         'log_file': {
             'level':'DEBUG',
@@ -196,23 +194,73 @@ LOGGING = {
             'filename': DEBUG_LOG,
             'maxBytes': 50000,
             'backupCount': 2,
-            'formatter': 'standard',
-        },
-        'console':{
-            'level':'INFO',
-            'class':'logging.StreamHandler',
-            'formatter': 'standard'
-        },
-        'mail_admins': {
-            'level': 'ERROR',
-            'class': 'django.utils.log.AdminEmailHandler',
+            #'formatter': 'standard',
         },
     },
-    # Loggers (where does the log come from)
     'loggers': {
         '': {
             'handlers': ['console', 'log_file'],
             'level': 'DEBUG',
+            'propagate': False,
         },
-    }
+        'django': {
+            'handlers': ['console', 'log_file'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.db': {
+        },
+        'django.request': {
+            'handlers': ['console', 'log_file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'django.db.backends.sqlite3': {
+            'handlers': ['console', 'log_file'],
+            'level': 'DEBUG',
+        },
+    },
 }
+
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     # How to format the output
+#     'formatters': {
+#         'standard': {
+#             'format' : "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+#             'datefmt' : "%d/%b/%Y %H:%M:%S"
+#         },
+#     },
+#     # Log handlers (where to go)
+#     'handlers': {
+#         'null': {
+#             'level':'DEBUG',
+#             'class':'django.utils.log.NullHandler',
+#         },
+#         'log_file': {
+#             'level':'DEBUG',
+#             'class':'logging.handlers.RotatingFileHandler',
+#             'filename': DEBUG_LOG,
+#             'maxBytes': 50000,
+#             'backupCount': 2,
+#             'formatter': 'standard',
+#         },
+#         'console':{
+#             'level':'INFO',
+#             'class':'logging.StreamHandler',
+#             'formatter': 'standard'
+#         },
+#         'mail_admins': {
+#             'level': 'ERROR',
+#             'class': 'django.utils.log.AdminEmailHandler',
+#         },
+#     },
+#     # Loggers (where does the log come from)
+#     'loggers': {
+#         '': {
+#             'handlers': ['console', 'log_file'],
+#             'level': 'DEBUG',
+#         },
+#     }
+# }
