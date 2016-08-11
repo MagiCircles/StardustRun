@@ -126,22 +126,6 @@ class Pokemon(models.Model):
         return self._local_cache_flatten_evolution_chain
 
     @property
-    def cached_owner(self):
-        if not self._cache_last_update or self._cache_last_update < timezone.now() - datetime.timedelta(days=self._cache_days):
-            self.force_cache()
-        return AttrDict({
-            'pk': self.owner_id,
-            'id': self.owner_id,
-            'username': self._cache_owner_username,
-            'email': self._cache_owner_email,
-            'item_url': '/user/{}/{}/'.format(self.owner_id, self._cache_owner_username),
-            'preferences': AttrDict({
-                'status': self._cache_owner_preferences_status,
-                'twitter': self._cache_owner_preferences_twitter,
-            }),
-        })
-
-    @property
     def types(self):
         return split_data(self.types_string)
 

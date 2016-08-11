@@ -46,6 +46,9 @@ JAVASCRIPT_TRANSLATED_TERMS += [
 
 EMPTY_IMAGE = 'pokeball_empty.png'
 
+ON_USER_EDITED = utils.onUserEdited
+ON_PREFERENCES_EDITED = utils.onPreferencesEdited
+
 ENABLED_COLLECTIONS = DEFAULT_ENABLED_COLLECTIONS
 
 ENABLED_COLLECTIONS['account']['list']['default_ordering'] = '-level'
