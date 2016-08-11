@@ -234,6 +234,10 @@ class EvolveOwnedPokemonForm(FormWithRequest):
         self.fields['cp'].required = False
         self.fields['hp'].label = string_concat(_('HP'), ' ', _('after evolution'))
         self.fields['hp'].required = False
+        self.fields['weight'].label = string_concat(_('Weight'), ' ', _('after evolution'))
+        self.fields['weight'].required = False
+        self.fields['height'].label = string_concat(_('Height'), ' ', _('after evolution'))
+        self.fields['height'].required = False
 
     def save(self, commit=True):
         instance = super(EvolveOwnedPokemonForm, self).save(commit=False)
@@ -252,4 +256,4 @@ class EvolveOwnedPokemonForm(FormWithRequest):
 
     class Meta:
         model = models.OwnedPokemon
-        fields = ('evolve_to', 'cp', 'hp')
+        fields = ('evolve_to', 'cp', 'hp', 'weight', 'height')
