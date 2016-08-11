@@ -98,19 +98,22 @@ def add_pokemon(request, pokemon):
 ############################################################
 # Ajax - Change pokedex: candies, seen and caught
 
+def pokedexChangeCandies(pokedex, candies):
+    pokedex.candies = candies
+    if pokedex.candies < 0:
+        pokedex.candies = 0
+    updated = models.Pokedex.objects.filter(account_id=pokedex.account_id, pokemon__id__in=pokedex.cached_evolution_chain).update(candies=pokedex.candies)
+    if updated != len(pokedex.cached_evolution_chain):
+        for id in pokedex.cached_evolution_chain:
+            if id != pokedex.pokemon_id:
+                try: models.Pokedex.objects.create(pokemon_id=id, account_id=pokedex.account_id, candies=pokedex.candies)
+                except IntegrityError: pass
+
 def change_candies(request, pokemon, account):
     if request.method != 'POST' or 'candies' not in request.POST:
         raise PermissionDenied()
     pokedex = get_object_or_404(models.Pokedex, account_id=account, account__owner=request.user, pokemon_id=pokemon)
-    pokedex.candies = int(request.POST['candies'])
-    if pokedex.candies < 0:
-        pokedex.candies = 0
-    updated = models.Pokedex.objects.filter(account_id=account, pokemon__id__in=pokedex.cached_evolution_chain).update(candies=pokedex.candies)
-    if updated != len(pokedex.cached_evolution_chain):
-        for id in pokedex.cached_evolution_chain:
-            if id != pokedex.pokemon_id:
-                try: models.Pokedex.objects.create(pokemon_id=id, account_id=account, candies=pokedex.candies)
-                except IntegrityError: pass
+    pokedexChangeCandies(pokedex, int(request.POST['candies']))
     return JsonResponse({
         'candies': pokedex.candies,
         'seen': pokedex.seen,

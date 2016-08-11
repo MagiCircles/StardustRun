@@ -215,13 +215,14 @@ class EditOwnedPokemonForm(FormWithRequest):
         instance = super(EditOwnedPokemonForm, self).save(commit=False)
         if not instance.nickname:
             instance.nickname = None
+        instance.update_cache_attacks()
         if commit:
             instance.save()
         return instance
 
     class Meta:
         model = models.OwnedPokemon
-        fields = ('nickname', 'cp', 'hp', 'weight', 'attack', 'special_attack')
+        fields = ('nickname', 'cp', 'hp', 'weight', 'height', 'attack', 'special_attack')
 
 class EvolveOwnedPokemonForm(FormWithRequest):
     evolve_to = forms.ChoiceField(choices=[], required=True)
@@ -239,7 +240,12 @@ class EvolveOwnedPokemonForm(FormWithRequest):
         instance.pokemon = models.Pokemon.objects.get(id=self.cleaned_data['evolve_to'])
         if instance.cp > instance.pokemon.max_cp:
             instance.cp = instance.pokemon.max_cp
-        instance.invalidate_cache_leaderboards()
+        # Update cache max cp and and can evolve
+        instance.update_cache_for_pokemon()
+        # Update seen / caught for new pokemon
+        updated = models.Pokedex.objects.filter(account_id=instance.account_id, pokemon=instance.pokemon).update(seen=True, caught=True)
+        if not updated:
+            models.Pokedex.objects.create(account_id=instance.account_id, pokemon=instance.pokemon, seen=True, caught=True)
         if commit:
             instance.save()
         return instance

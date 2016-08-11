@@ -348,6 +348,22 @@ class OwnedPokemon(models.Model):
     _cache_can_evolve = models.NullBooleanField(default=None)
     _cache_max_cp = models.PositiveIntegerField(null=True)
 
+    def update_cache_attacks(self):
+        """
+        Recommended to use select_related('attack', 'special_attack') when calling this method
+        """
+        if self.attack_id:
+            self._cache_attack_name = self.attack.name
+        if self.special_attack_id:
+            self._cache_special_attack_name = self.special_attack.name
+
+    def update_cache_for_pokemon(self):
+        """
+        Recommended to use select_related('pokemon') when calling this method
+        """
+        self._cache_can_evolve = bool(self.pokemon.flatten_next_evolutions_ids)
+        self._cache_max_cp = self.pokemon.max_cp
+
     def force_cache(self):
         """
         Recommended to use select_related('pokemon', 'account', 'attack', 'special_attack') when calling this method
@@ -356,12 +372,8 @@ class OwnedPokemon(models.Model):
         self._cache_account_nickname = self.account.nickname
         self._cache_account_owner_id = self.account.owner_id
         self._cache_account_owner_username = self.account.cached_owner.username
-        if self.attack_id:
-            self._cache_attack_name = self.attack.name
-        if self.special_attack_id:
-            self._cache_special_attack_name = self.special_attack.name
-        self._cache_can_evolve = bool(self.pokemon.flatten_next_evolutions_ids)
-        self._cache_max_cp = self.pokemon.max_cp
+        self.update_cache_attacks()
+        self.update_cache_for_pokemon()
         self.save()
 
     def invalidate_cache(self):
