@@ -133,7 +133,7 @@ STATIC_UPLOADED_FILES_PREFIX = None
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
-TINYPNG_API_KEY = None
+TINYPNG_API_KEY = os.environ.get('tinypng_api_key', None)
 STARTERS = []
 
 LOGIN_REDIRECT_URL = '/'
