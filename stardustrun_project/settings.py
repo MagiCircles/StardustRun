@@ -146,7 +146,7 @@ if 'aws_access_key_id' in os.environ:
     AWS_SECRET_ACCESS_KEY = os.environ.get('aws_secret_access_key', 'your aws secret key')
 
     AWS_SES_REGION_NAME = os.environ.get('aws_ses_region_name', 'us-east-1')
-    AWS_SES_REGION_ENDPOINT = os.environ.get('aws_ses_region_endpoint', 'email.us-east-1.amazonaws.om')
+    AWS_SES_REGION_ENDPOINT = os.environ.get('aws_ses_region_endpoint', 'email.us-east-1.amazonaws.com')
 
     DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
     AWS_STORAGE_BUCKET_NAME = 'i.stardust.run'
