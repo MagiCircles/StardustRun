@@ -49,7 +49,9 @@ POKEMONS_MAX_STATS = ' + unicode(stats) + '\n\
 GENERATED_DATE = datetime.datetime.fromtimestamp(' + unicode(time.time()) + u')\n\
 '
     print s
-    with open(django_settings.BASE_DIR + '/' + django_settings.SITE + '_project/generated_settings.py', 'w') as f:
+    filename = django_settings.BASE_DIR + '/' + django_settings.SITE + '_project/generated_settings.py'
+    print filename
+    with open(filename, 'w') as f:
         print >> f, s
         f.close()
 
