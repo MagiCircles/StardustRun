@@ -1,0 +1,8 @@
+{% load web_tags %}
+<script>
+  var starters_images = {
+    {% for starter_id, starter_image in starters_images %}
+    '{{ starter_id }}': '{{ starter_image|imageURL }}',
+    {% endfor %}
+  };
+</script>
