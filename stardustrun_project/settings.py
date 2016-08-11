@@ -17,15 +17,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '#yt2*mvya*ulaxd+6jtr#%ouyco*2%3ngb=u-_$44j^86g0$$3'
+SECRET_KEY = os.environ.get('django_secret_key', '#yt2*mvya*ulaxd+6jtr#%ouyco*2%3ngb=u-_$44j^86g0$$3')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.environ.get('django_debug', '1')))
 
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
+if not DEBUG:
+    ALLOWED_HOSTS = os.environ.get('django_allowed_hosts', '').split(',')
 
 # Application definition
 
@@ -73,6 +75,19 @@ DATABASES = {
     }
 }
 
+if 'rds_hostname' in os.environ:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'stardustrun',
+            'OPTIONS': {'charset': 'utf8mb4'},
+            'USER': os.environ['rds_username'],
+            'PASSWORD': os.environ['rds_password'],
+            'HOST': os.environ['rds_hostname'],
+            'PORT': os.environ['rds_port'],
+        }
+    }
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
@@ -118,13 +133,27 @@ STATIC_UPLOADED_FILES_PREFIX = None
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_URLS_REGEX = r'^/api/.*$'
 
+TINYPNG_API_KEY = None
+STARTERS = []
+
 LOGIN_REDIRECT_URL = '/'
 LOG_EMAIL = 'emails-log@schoolido.lu'
 PASSWORD_EMAIL = 'password@schoolido.lu'
 AWS_SES_RETURN_PATH = 'contact@schoolido.lu'
 
-TINYPNG_API_KEY = None
-STARTERS = []
+if 'aws_access_key_id' in os.environ:
+    AWS_ACCESS_KEY_ID = os.environ.get('aws_access_key_id', 'your aws access key')
+    AWS_SECRET_ACCESS_KEY = os.environ.get('aws_secret_access_key', 'your aws secret key')
+
+    AWS_SES_REGION_NAME = os.environ.get('aws_ses_region_name', 'us-east-1')
+    AWS_SES_REGION_ENDPOINT = os.environ.get('aws_ses_region_endpoint', 'email.us-east-1.amazonaws.om')
+
+    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    AWS_STORAGE_BUCKET_NAME = 'i.stardust.run'
+
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    from boto.s3.connection import OrdinaryCallingFormat
+    AWS_S3_CALLING_FORMAT = OrdinaryCallingFormat()
 
 try:
     from generated_settings import *
