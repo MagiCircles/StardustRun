@@ -6,43 +6,95 @@ The Pokémon GO Sharing Community
 Get Started
 -----------
 
-```
-# Install pre-requirements
-# Debian, Ubuntu, and variants
-apt-get install libpython-dev libffi-dev python-virtualenv libmysqlclient-dev nodejs
-# Arch
-pacman -S libffi python-virtualenv libmysqlclient nodejs
+- Install pre-requirements
 
-# Clone the repo
-git clone https://github.com/SchoolIdolTomodachi/StardustRun.git
-cd StardustRun
+  - Debian, Ubuntu, and variants
 
-# Create a virtualenv to isolate the package dependencies locally
-virtualenv env
-source env/bin/activate
+    ```shell
+    apt-get install libpython-dev libffi-dev python-virtualenv libmysqlclient-dev nodejs
+    ```
 
-# Install packages, no need to be root
-pip install --upgrade setuptools
-pip install -r requirements.txt
+  - Arch
 
-# Create tables, initialize database
-python manage.py migrate
+    ```shell
+    pacman -S libffi python-virtualenv libmysqlclient nodejs
+    ```
 
-# Create the initial database of pokémons (optional)
-python manage.py import_serebii
+- Clone the repo
 
-# Generate the generated settings
-python manage.py generate_settings
+  ```shell
+  git clone https://github.com/SchoolIdolTomodachi/StardustRun.git
+  cd StardustRun
+  ```
 
-# Compile localized messages
-python manage.py compilemessages
+- Create a virtualenv to isolate the package dependencies locally
 
-# Download front-end dependencies
-npm install -g bower less
-bower install
+  ```shell
+  virtualenv env
+  source env/bin/activate
+  ```
 
-# Launch the server
-python manage.py runserver
+- Install packages (including [MagiCircles](https://github.com/SchoolIdolTomodachi/MagiCircles))
 
-# Then open your browser to http://localhost:8000 to see the website
-```
+  ```shell
+  pip install --upgrade setuptools
+  pip install -r requirements.txt
+  ```
+
+- Create tables, initialize database
+
+  ```shell
+  python manage.py migrate
+  ```
+
+- Create the initial database of pokémons (optional)
+
+  ```shell
+  pip install beautifulsoup4
+  pip install html5lib
+  python manage.py import_serebii
+  ```
+  You may use "noimages" after "import_serebii" to make it faster
+
+- Generate the generated settings
+
+  ```shell
+  python manage.py generate_settings
+  ```
+
+- Get the static files
+
+  ```shell
+  git clone https://github.com/SchoolIdolTomodachi/StardustRun-Static.git
+  mv StardustRun-Static stardustrun/static
+  ```
+
+- Download front-end dependencies
+
+  ```shell
+  npm install -g bower
+  bower install
+  ```
+
+- Launch the server
+
+  ```shell
+  python manage.py runserver
+  ```
+
+- Open your browser to [http://localhost:8000/](http://localhost:8000/) to see the website
+
+
+## More
+
+- Compile localized messages
+
+  ```shell
+  python manage.py compilemessages
+  ```
+
+- Fill the map with users locations
+
+  ```shell
+  python manage.py latlong
+  ```
