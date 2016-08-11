@@ -107,3 +107,8 @@ stardustrun/static/uploaded/
 
 /pokemonattacks.html
 /pokemons.html
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

@@ -6,7 +6,9 @@ from django.utils import timezone
 from django.conf import settings as django_settings
 from django.core.files.temp import NamedTemporaryFile
 from django.core.files.images import ImageFile
+from django.core.exceptions import ObjectDoesNotExist
 from tinypng import shrink_file
+from web.models import UserPreferences
 from web.utils import join_data
 from web.tools import totalDonators, itemURL
 from web.templatetags.web_tags import imageURL
@@ -54,7 +56,11 @@ def import_serebii(args):
     else:
         f = urllib2.urlopen('http://serebii.net/pokemongo/pokemon.shtml')
 
-    owner = models.User.objects.get(username='db0')
+    try:
+        owner = models.User.objects.get(username='db0')
+    except ObjectDoesNotExist:
+        owner = models.User.objects.create(username='db0')
+        preferences = UserPreferences.objects.create(user=owner)
     soup = BeautifulSoup(f.read(), 'html5lib')
     trs = soup.find_all('tr')
     evolutions = []

@@ -123,6 +123,9 @@ LOG_EMAIL = 'emails-log@schoolido.lu'
 PASSWORD_EMAIL = 'password@schoolido.lu'
 AWS_SES_RETURN_PATH = 'contact@schoolido.lu'
 
+TINYPNG_API_KEY = None
+STARTERS = []
+
 try:
     from generated_settings import *
 except ImportError, e:
