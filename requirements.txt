@@ -1,2 +1,2 @@
-git+https://github.com/SchoolIdolTomodachi/MagiCircles.git@7d09adff5b14508321849398fd0f44ed53468db1
+git+https://github.com/SchoolIdolTomodachi/MagiCircles.git
 mysql-python
