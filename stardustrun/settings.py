@@ -14,6 +14,8 @@ DISQUS_SHORTNAME = 'stardustrun'
 ACCOUNT_MODEL = models.Account
 COLOR = '#49d6b5'
 
+GOOGLE_ANALYTICS = 'UA-82373013-1'
+
 SITE_DESCRIPTION = _(u'The Pokémon GO Sharing Community')
 
 SHOW_TOTAL_ACCOUNTS = False
