@@ -78,6 +78,7 @@ ENABLED_COLLECTIONS['account']['add']['js_files'] = ENABLED_COLLECTIONS['account
 ENABLED_COLLECTIONS['account']['edit']['js_files'] = ENABLED_COLLECTIONS['account']['edit'].get('js_files', []) + ['accountsForm']
 
 ENABLED_COLLECTIONS['account']['item'] = {
+    'comments_enabled': False,
 }
 
 ENABLED_COLLECTIONS['user']['item']['js_files'] = ENABLED_COLLECTIONS['user']['item'].get('js_files', []) + ['profile_account_tabs']
