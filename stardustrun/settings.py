@@ -29,6 +29,7 @@ SITE_LOGO = 'stardustrun_logo.png'
 CALL_TO_ACTION = _(u'Share your Pokémons!')
 
 GAME_DESCRIPTION = _(u'Pokémon Go is a free-to-play, location-based augmented reality game developed and published by Niantic for iOS and Android devices.')
+GAME_URL = 'http://www.pokemongo.com/'
 
 TOTAL_DONATORS = getattr(django_settings, 'TOTAL_DONATORS', 2)
 
