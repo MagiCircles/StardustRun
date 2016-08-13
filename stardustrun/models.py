@@ -1,17 +1,20 @@
 # -*- coding: utf-8 -*-
 import datetime, os
-from django.contrib.auth.models import User
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings as django_settings
 from django.db import models
+from web.models import User
+from web.item_model import ItemModel
 from web.utils import split_data, join_data, AttrDict, tourldash
 from stardustrun.model_choices import *
 
 ############################################################
 # Attack
 
-class Attack(models.Model):
+class Attack(ItemModel):
+    collection_name = 'attack'
+
     name = models.CharField(max_length=100, unique=True)
     type = models.CharField(max_length=100, choices=POKEMON_TYPES_DATABASE_CHOICES)
     damage = models.PositiveIntegerField(_('Damage'), null=True)
@@ -37,7 +40,9 @@ def pokemonUploadTo(instance, filename):
         extension = '.png'
     return django_settings.STATIC_UPLOADED_FILES_PREFIX + 'p/' + unicode(instance.id) + tourldash(instance.name) + extension
 
-class Pokemon(models.Model):
+class Pokemon(ItemModel):
+    collection_name = 'pokemon'
+
     id = models.PositiveIntegerField(_(u'Pokémon number'), unique=True, primary_key=True)
     name = models.CharField(_(u'Pokémon name'), max_length=100, unique=True)
     image = models.ImageField(_('Image'), upload_to=pokemonUploadTo)
@@ -181,7 +186,9 @@ def getPokemonEvolutionChain(pokemon):
 ############################################################
 # Account
 
-class Account(models.Model):
+class Account(ItemModel):
+    collection_name = 'account'
+
     owner = models.ForeignKey(User, related_name='accounts', db_index=True)
     creation = models.DateTimeField(auto_now_add=True)
     nickname = models.CharField(_("Nickname"), max_length=20)
@@ -310,7 +317,9 @@ def getAccountLeaderboardForTeam(account):
 ############################################################
 # OwnedPokemon
 
-class OwnedPokemon(models.Model):
+class OwnedPokemon(ItemModel):
+    collection_name = 'ownedpokemon'
+
     account = models.ForeignKey(Account, related_name='pokemons', db_index=True)
     pokemon = models.ForeignKey(Pokemon, related_name='have_it', db_index=True)
     cp = models.PositiveIntegerField(_('CP'), null=True)
@@ -453,10 +462,12 @@ class OwnedPokemon(models.Model):
 ############################################################
 # Pokedex
 
-class Pokedex(models.Model):
+class Pokedex(ItemModel):
     """
     For each account and pokemon, store weither you've seen/caught it + how many candies you have.
     """
+    collection_name = 'pokedex'
+
     account = models.ForeignKey(Account, related_name='pokedex', db_index=True)
     pokemon = models.ForeignKey(Pokemon, related_name='pokedexes', db_index=True)
     candies = models.PositiveIntegerField(_('Candies'), default=0)

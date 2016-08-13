@@ -42,7 +42,7 @@
 	<div class="starter-image">
 	  {% if account.starter %}
 	  <a href="{{ account.cached_starter.item_url }}" data-ajax-url="{{ account.cached_starter.ajax_item_url }}" data-ajax-title="{% trans account.cached_starter.name %}">
-	    <img src="{{ account.cached_starter.image|imageURL }}" class="img-responsive">
+	    <img src="{{ account.cached_starter.image }}" class="img-responsive">
 	  </a>
 	  {% endif %}
 	</div>

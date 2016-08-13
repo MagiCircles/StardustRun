@@ -1,6 +1,5 @@
 {# variables: account, pokemon, pokedex #}
 {% load i18n %}
-{% load web_tags %}
 {% if not hide_account %}
 <h3 class="full-pokemon-account team-{{ account.team }}">
   <span class="inner">
@@ -10,12 +9,12 @@
 </h3>
 {% endif %}
 {% if not_editable %}
-<a href="{{ 'pokemon'|itemURL:pokemon }}" class="a-nodifference">
+<a href="{{ pokemon.item_url }}" class="a-nodifference">
   {% endif %}
   <div class="full-pokemon-pokedex{% if view == 'icons' %} icons-view{% endif %}{% if not_editable %} not-editable-pokedex{% endif %}" data-pokemon="{{ pokemon.id }}" data-account="{{ account.id }}">
     <div class="row">
       <div class="col-sm-{% if view == 'icons' %}12{% else %}{% if hide_account %}2{% else %}3{% endif %}{% endif %}">
-	<img src="{{ pokemon.image|imageURL }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image pokemon-image-change-seen{% if not pokedex.seen %} not-seen{% endif %}">
+	<img src="{{ pokemon.image_url }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image pokemon-image-change-seen{% if not pokedex.seen %} not-seen{% endif %}">
       </div>
       {% if view != 'icons' %}
       <div class="col-sm-3">
@@ -42,7 +41,7 @@
       </div>
       {% if hide_account %}
       <div class="col-sm-1">
-	<a href="{{ 'pokemon'|itemURL:pokemon }}" class="inline-block a-nodifference fontx2 text-center padding20" target="_blank" data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}" data-ajax-title="{% trans pokemon.name %}"><i class="text-muted flaticon-about"></i></a>
+	<a href="{{ pokemon.item_url }}" class="inline-block a-nodifference fontx2 text-center padding20" target="_blank" data-ajax-url="{{ pokemon.ajax_item_url }}" data-ajax-title="{% trans pokemon.name %}"><i class="text-muted flaticon-about"></i></a>
       </div>
       {% endif %}
       {% endif %}

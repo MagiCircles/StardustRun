@@ -1,10 +1,9 @@
 {% if user.is_authenticated %}
 {% load i18n %}
-{% load web_tags %}
 <div class="padding50 text-center pokemons-share">
   <h1>{% trans 'Share your pokémons!' %}</h1>
 
-  <a href="{{ 'user'|itemURL:user }}" target="_blank" class="btn btn-main btn-xl">
+  <a href="{{ user.item_url }}" target="_blank" class="btn btn-main btn-xl">
     {% trans 'Check out your own profile' %}
   </a><br>
   <a href="/settings/" target="_blank" class="btn btn-link btn-lg">
@@ -13,7 +12,7 @@
   </a>
   <div class="pokemons-share-buttons">
     <p>{% trans 'Share it on:' %}</p>
-    {% include 'include/share.html' with share_url='user'|fullItemURL:user share_btn_class='main btn-xl' %}
+    {% include 'include/share.html' with share_url=user.http_item_url share_btn_class='main btn-xl' %}
   </div>
 </div>
 {% endif %}

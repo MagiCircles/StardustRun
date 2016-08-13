@@ -53,12 +53,15 @@ ON_PREFERENCES_EDITED = utils.onPreferencesEdited
 
 ENABLED_COLLECTIONS = DEFAULT_ENABLED_COLLECTIONS
 
+ENABLED_COLLECTIONS['activity']['list']['share_image'] = 'screenshots/home.png'
+
 ENABLED_COLLECTIONS['account']['list']['default_ordering'] = '-level'
 ENABLED_COLLECTIONS['account']['list']['filter_form'] = forms.FilterAccounts
 ENABLED_COLLECTIONS['account']['list']['filter_queryset'] = filters.filterAccounts
 ENABLED_COLLECTIONS['account']['list']['js_files'] = ENABLED_COLLECTIONS['account']['list'].get('js_files', []) + ['leaderboard']
 ENABLED_COLLECTIONS['account']['list']['extra_context'] = collections.leaderboardExtraContext
 ENABLED_COLLECTIONS['account']['list']['before_template'] = 'include/accountsBeforeTemplate'
+ENABLED_COLLECTIONS['account']['list']['share_image'] = 'screenshots/leaderboard.png'
 
 ENABLED_COLLECTIONS['account']['add']['redirect_after_add'] = collections.redirectAfterAddAccount
 
@@ -78,12 +81,14 @@ ENABLED_COLLECTIONS['account']['item'] = {
 
 ENABLED_COLLECTIONS['user']['item']['js_files'] = ENABLED_COLLECTIONS['user']['item'].get('js_files', []) + ['profile_account_tabs']
 ENABLED_COLLECTIONS['user']['item']['extra_context'] = collections.profileGetAccountTabs
+ENABLED_COLLECTIONS['user']['item']['share_image'] = collections.shareUserImage
 
 ENABLED_COLLECTIONS['pokemon'] = {
     'queryset': models.Pokemon.objects.all(),
     'title': _(u'Pokémon'),
     'plural_title': _(u'Pokémons'),
     'icon': 'album',
+    'share_image': 'screenshots/pokemons.png',
     'list': {
         'filter_queryset': filters.filterPokemons,
         'default_ordering': 'id',
@@ -101,7 +106,8 @@ ENABLED_COLLECTIONS['pokemon'] = {
         'template': 'pokemonFullItem',
         'extra_context': collections.pokemonFullItemContext,
         'ajax': True,
-        'js_files': ['full_pokemon']
+        'js_files': ['full_pokemon'],
+        'share_image': collections.sharePokemonImage,
     },
     'add': {
         'form_class': forms.PokemonForm,
@@ -172,6 +178,8 @@ ENABLED_COLLECTIONS['ownedpokemon'] = {
 }
 
 ENABLED_PAGES = DEFAULT_ENABLED_PAGES
+
+ENABLED_PAGES['map']['custom'] = True
 
 ENABLED_PAGES['pokedex'] = {
     'ajax': True,

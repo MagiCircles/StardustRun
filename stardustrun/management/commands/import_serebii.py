@@ -10,8 +10,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from tinypng import shrink_file
 from web.models import UserPreferences
 from web.utils import join_data
-from web.tools import totalDonators, itemURL
-from web.templatetags.web_tags import imageURL
+from web.tools import totalDonators
 from stardustrun import models
 
 def shrunkImage(picture, filename):

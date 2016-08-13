@@ -2,7 +2,7 @@
 <script>
   var starters_images = {
     {% for starter_id, starter_image in starters_images %}
-    '{{ starter_id }}': '{{ starter_image|imageURL }}',
+    '{{ starter_id }}': '{{ starter_image }}',
     {% endfor %}
   };
 </script>

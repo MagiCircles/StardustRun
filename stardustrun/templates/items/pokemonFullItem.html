@@ -1,4 +1,3 @@
-{% load web_tags %}
 {% load i18n %}
 {% load l10n %}
 {% load tools %}
@@ -10,7 +9,7 @@
   <div class="full-pokemon-banner" style="background-image: url('{{ static_url }}img/background_types_pattern/{{ pokemon.main_type }}.png');">
     <div class="row">
       <div class="col-md-3">
-	<img src="{{ pokemon.image|imageURL }}" alt="{% trans pokemon.name %}" class="img-responsive full-pokemon-image">
+	<img src="{{ pokemon.image_url }}" alt="{% trans pokemon.name %}" class="img-responsive full-pokemon-image">
       </div>
       <div class="col-md-9">
 	<div class="full-pokemon-stats clearfix"
@@ -40,16 +39,16 @@
 	</div>
 	<div class="full-pokemon-tab-buttons">
 	  {% if tab != 'collection' %}
-	  <a href="{{ 'pokemon'|itemURL:pokemon }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Your Collection' %}"{% if ajax %} data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-profile"></i></a>
+	  <a href="{{ pokemon.item_url }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Your Collection' %}"{% if ajax %} data-ajax-url="{{ pokemon.ajax_item_url }}" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-profile"></i></a>
 	  {% endif %}
 	  {% if pokemon.evolution_chain_ids|length > 1 and  tab != 'evolutions' %}
-	  <a href="{{ 'pokemon'|itemURL:pokemon }}?tab=evolutions" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Evolutions' %} ({{ pokemon.flatten_evolution_chain_ids|length }})"{% if ajax %} data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}?tab=evolutions" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-toggler"></i></a>
+	  <a href="{{ pokemon.item_url }}?tab=evolutions" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Evolutions' %} ({{ pokemon.flatten_evolution_chain_ids|length }})"{% if ajax %} data-ajax-url="{{ pokemon.ajax_item_url }}?tab=evolutions" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-toggler"></i></a>
 	  {% endif %}
 	  {% if tab != 'attacks' %}
-	  <a href="{{ 'pokemon'|itemURL:pokemon }}?tab=attacks" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Attacks' %}"{% if ajax %} data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}?tab=attacks" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-index"></i></a>
+	  <a href="{{ pokemon.item_url }}?tab=attacks" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Attacks' %}"{% if ajax %} data-ajax-url="{{ pokemon.ajax_item_url }}?tab=attacks" data-ajax-title="{% trans pokemon.name %}"{% endif %}><i class="flaticon-index"></i></a>
 	  {% endif %}
 	  {% if ajax %}
-	  <a href="{{ 'pokemon'|itemURL:pokemon }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Permalink' %}" target="_blank"><i class="flaticon-link"></i></a>
+	  <a href="{{ pokemon.item_url }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'Permalink' %}" target="_blank"><i class="flaticon-link"></i></a>
 	  {% endif %}
 	</div>
 	<div class="full-pokemon-types-and-egg">
@@ -69,7 +68,7 @@
   {% if tab == 'collection' %}
   {% if user.is_authenticated %}
   {% if not user.all_accounts|length %}
-  <a href="/accounts/add/?next={{ 'pokemon'|itemURL:pokemon }}" class="a-nodifference">
+  <a href="/accounts/add/?next={{ pokemon.item_url }}" class="a-nodifference">
     {% include 'include/empty_pokedex.html' %}
   </a>
   {% else %}
@@ -106,7 +105,7 @@
   {% endfor %}
   {% endif %}
   {% else %}
-  <a href="/signup/?next={{ 'pokemon'|itemURL:pokemon }}" class="a-nodifference">
+  <a href="/signup/?next={{ pokemon.item_url }}" class="a-nodifference">
     {% include 'include/empty_pokedex.html' %}
   </a>
   {% endif %}
@@ -118,11 +117,11 @@
     <div class="pokemon-evolution">
       {% for epokemon in pokemon_list %}
       <figure>
-	<a {% if epokemon.id == pokemon.id %}href="#"{% else %}href="{{ 'pokemon'|itemURL:epokemon }}"{% if ajax %} data-ajax-url="{{ 'pokemon'|ajaxItemURL:epokemon }}?tab=evolutions" data-ajax-title="{% trans epokemon.name %}"{% endif %}{% endif %}>
-	  <img src="{{ epokemon.image|imageURL }}" alt="{% trans epokemon.name %}" class="img-responsive">
+	<a {% if epokemon.id == pokemon.id %}href="#"{% else %}href="{{ epokemon.item_url }}"{% if ajax %} data-ajax-url="{{ epokemon.ajax_item_url }}?tab=evolutions" data-ajax-title="{% trans epokemon.name %}"{% endif %}{% endif %}>
+	  <img src="{{ epokemon.image_url }}" alt="{% trans epokemon.name %}" class="img-responsive">
 	</a>
 	<figcaption>
-	  <a href="{{ 'pokemon'|itemURL:epokemon }}">
+	  <a href="{{ epokemon.item_url }}">
 	    #{{ epokemon.id }} {% trans epokemon.name %}
 	  </a>
 	</figcaption>

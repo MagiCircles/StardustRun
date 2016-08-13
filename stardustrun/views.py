@@ -5,7 +5,7 @@ from django.db import IntegrityError
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import ugettext_lazy as _
 from django.conf import settings as django_settings
-from web.tools import itemURL
+from web.views import mapDefaultContext
 from web.views_collections import item_view
 from stardustrun.settings import ENABLED_COLLECTIONS
 from stardustrun.utils import globalContext
@@ -49,14 +49,14 @@ def evolve(request, ownedpokemon):
     ownedpokemon = get_object_or_404(models.OwnedPokemon.objects.select_related('pokemon'), pk=ownedpokemon, account__owner_id=request.user.id)
     ajax = context['current'].endswith('_ajax')
     if not ownedpokemon.pokemon.next_evolutions_ids:
-        return redirect(itemURL(ownedpokemon.pokemon, ajax=ajax))
+        return redirect(ownedpokemon.pokemon.item_url if not ajax else ownedpokemon.pokemon.ajax_item_url)
     if request.method == 'POST' and 'evolve' in request.POST:
         form = forms.EvolveOwnedPokemonForm(request.POST, instance=ownedpokemon)
         if form.is_valid():
             instance = form.save()
             if not ajax and 'back_to_profile' in request.GET:
-                return redirect(itemURL('user', request.user))
-            return redirect(itemURL('pokemon', instance.pokemon, ajax=ajax))
+                return redirect(request.user.item_url)
+            return redirect(instance.pokemon.item_url if not ajax else instance.pokemon.ajax_item_url)
     else:
         form = forms.EvolveOwnedPokemonForm(instance=ownedpokemon)
     context['op'] = ownedpokemon
@@ -70,6 +70,14 @@ def evolve(request, ownedpokemon):
     if ajax:
         context['extends'] = 'ajax.html'
     return render(request, 'pages/evolve.html', context)
+
+############################################################
+# Map
+
+def map(request):
+    context = mapDefaultContext(request)
+    context['share_image'] = context['full_static_url'] + 'img/screenshots/map.png'
+    return render(request, 'pages/map.html', context)
 
 ############################################################
 # Ajax - Add ownedpokemon to collection

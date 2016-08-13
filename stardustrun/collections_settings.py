@@ -25,6 +25,9 @@ def profileGetAccountTabs(context):
         account.show = show if show in _profile_tabs_dict else 'Pokemons'
     context['account_tabs'] = _profile_tabs
 
+def shareUserImage(context, collection, view, item):
+    return item.image_url
+
 ############################################################
 # Accounts
 
@@ -125,6 +128,9 @@ def pokemonFullItemContext(context):
         pass
     elif context['tab'] == 'attacks':
         context['item'].all_attacks = context['item'].attacks.all().order_by('is_special')
+
+def sharePokemonImage(context, collection, view, item):
+    return item.image_url
 
 ############################################################
 # OwnedPokemons

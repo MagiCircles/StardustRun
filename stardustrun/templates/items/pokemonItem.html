@@ -1,4 +1,3 @@
-{% load web_tags %}
 {% load i18n %}
 {% with pokemon=item %}
 <div class="padding50 text-center pokemon" id="pokemon{{ pokemon.id }}">
@@ -14,25 +13,25 @@
   {% endif %}
   <a {% if user.is_authenticated %}
      {% if pokemon.owned %}
-     data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}" data-ajax-title="{% trans pokemon.name %}"
-     href="{{ 'pokemon'|itemURL:pokemon }}"
+     data-ajax-url="{{ pokemon.ajax_item_url }}" data-ajax-title="{% trans pokemon.name %}"
+     href="{{ pokemon.item_url }}"
      {% elif not user.all_accounts %}
-     href="/accounts/add/?next={{ 'pokemon'|itemURL:pokemon }}"
+     href="/accounts/add/?next={{ pokemon.item_url }}"
      {% else %}
      href="#addPokemon"
-     data-item-url="{{ 'pokemon'|itemURL:pokemon }}"
-     data-item-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}"
+     data-item-url="{{ pokemon.item_url }}"
+     data-item-ajax-url="{{ pokemon.ajax_item_url }}"
      data-item-ajax-title="{% trans pokemon.name %}"
      {% endif %}
      {% else %}
-     href="/signup/?next={{ 'pokemon'|itemURL:pokemon }}"
+     href="/signup/?next={{ pokemon.item_url }}"
      {% endif %}
      {% if not pokemon.owned %}
      data-toggle="popover" data-placement="top" data-trigger="hover" data-delay="{'show':200,'hide':1}" data-html="true"
      data-content="<div class='text-center'>{% blocktrans %}Click to add {{ pokemon }} to your collection{% endblocktrans %}</div>"
      {% endif %}
      class="pokemon-link {% if pokemon.seen %}pokemon-seen{% endif %} a-nodifference">
-    <img src="{{ pokemon.image|imageURL }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image">
+    <img src="{{ pokemon.image_url }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image">
     <span class="add-button">
       <i class="flaticon-loading" style="display: none;"></i>
       {% if not pokemon.owned %}
@@ -45,7 +44,7 @@
     </span>
   </a>
   <br>
-  <a data-ajax-url="{{ 'pokemon'|ajaxItemURL:pokemon }}" data-ajax-title="{% trans pokemon.name %}" href="{{ 'pokemon'|itemURL:pokemon }}" class="a-nodifference">
+  <a data-ajax-url="{{ pokemon.ajax_item_url }}" data-ajax-title="{% trans pokemon.name %}" href="{{ pokemon.item_url }}" class="a-nodifference">
     <h4><span class="pokemon-number">#{{ pokemon.id }}</span>&nbsp;{% trans pokemon.name %}&nbsp;<i class="flaticon-about"></i></h4>
   </a>
   {% if user.is_staff %}

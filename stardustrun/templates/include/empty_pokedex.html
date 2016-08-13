@@ -1,6 +1,5 @@
 {# variables: pokemon #}
 {% load i18n %}
-{% load web_tags %}
 <h3 class="full-pokemon-account team-None">
   <span class="inner">
     <span class="nickname">{% trans 'You' %}</span>
@@ -10,7 +9,7 @@
 <div class="full-pokemon-pokedex not-editable-pokedex">
   <div class="row">
     <div class="col-sm-3">
-      <img src="{{ pokemon.image|imageURL }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image not-seen">
+      <img src="{{ pokemon.image_url }}" alt="{% trans pokemon.name %}" class="img-responsive pokemon-image not-seen">
     </div>
     <div class="col-sm-3">
       <span class="pokedex-title">{% trans 'Seen' %}</span>

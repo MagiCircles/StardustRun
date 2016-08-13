@@ -1,4 +1,3 @@
-{% load web_tags %}
 {% load i18n %}
 <div class="row">
   {% for team_name, localized_name, css_name in teams %}
@@ -15,7 +14,7 @@
 <script>
   var starters_images = {
     {% for starter_id, starter_image in starters_images %}
-    '{{ starter_id }}': '{{ starter_image|imageURL }}',
+    '{{ starter_id }}': '{{ starter_image }}',
     {% endfor %}
   };
 </script>

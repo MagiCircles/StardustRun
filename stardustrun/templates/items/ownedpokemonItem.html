@@ -5,7 +5,7 @@
 <div class="ownedpokemon" id="ownedpokemon{{ op.id }}" data-ownedpokemon-id="{{ op.id }}" data-ownedpokemon-account-id="{{ op.account_id }}">
   <span class="cp-title">{% trans 'CP' %}</span> <span class="cp">{% if op.cp %}{{ op.cp }}{% else %}??{% endif %}</span>
   <a href="{{ op.cached_pokemon.item_url }}"{% if ajax and not in_full_pokemon %} data-ajax-url="{{ op.cached_pokemon.ajax_item_url }}" data-ajax-title="{{ op.force_nickname }}"{% endif %}>
-    <img src="{{ op.cached_pokemon.image|imageURL }}" alt="{% trans op.cached_pokemon.name %}" class="img-responsive">
+    <img src="{{ op.cached_pokemon.image }}" alt="{% trans op.cached_pokemon.name %}" class="img-responsive">
   </a>
   <h5 class="pokemon-nickname">{{ op.force_nickname }}</h5>
   <div class="text-center">
