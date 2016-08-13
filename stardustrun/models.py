@@ -210,7 +210,7 @@ class Account(ItemModel):
     _cache_owner_preferences_status = models.CharField(choices=DONATORS_STATUS_CHOICES, max_length=12, null=True)
     _cache_owner_preferences_twitter = models.CharField(max_length=32, null=True, blank=True)
 
-    _cache_leaderboards_days = 3
+    _cache_leaderboards_days = 1
     _cache_leaderboards_last_update = models.DateTimeField(null=True)
     _cache_leaderboard = models.PositiveIntegerField(null=True)
     _cache_leaderboard_team = models.PositiveIntegerField(null=True)
