@@ -26,7 +26,7 @@ HASHTAGS = ['PokemonGO']
 
 SITE_LOGO = 'stardustrun_logo.png'
 
-CALL_TO_ACTION = _(u'Share your Pokémons!')
+CALL_TO_ACTION = _(u'Share your Pokédex!')
 
 GAME_DESCRIPTION = _(u'Pokémon Go is a free-to-play, location-based augmented reality game developed and published by Niantic for iOS and Android devices.')
 GAME_URL = 'http://www.pokemongo.com/'
@@ -88,7 +88,7 @@ ENABLED_COLLECTIONS['user']['item']['share_image'] = collections.shareUserImage
 ENABLED_COLLECTIONS['pokemon'] = {
     'queryset': models.Pokemon.objects.all(),
     'title': _(u'Pokémon'),
-    'plural_title': _(u'Pokémons'),
+    'plural_title': _(u'Pokémon'),
     'icon': 'album',
     'share_image': 'screenshots/pokemons.png',
     'list': {
@@ -157,7 +157,7 @@ ENABLED_COLLECTIONS['attack'] = {
 ENABLED_COLLECTIONS['ownedpokemon'] = {
     'queryset': models.OwnedPokemon.objects.all(),
     'title': _(u'Pokémon'),
-    'plural_title': _(u'Pokémons'),
+    'plural_title': _(u'Pokémon'),
     'navbar_link': False,
     'list': {
         'default_ordering': '-cp',

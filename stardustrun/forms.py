@@ -116,8 +116,8 @@ class FilterPokemonsForm(FormWithRequest):
     search = forms.CharField(required=False)
     type = forms.ChoiceField(choices=BLANK_CHOICE_DASH + list(models.POKEMON_TYPES_DATABASE_CHOICES), required=False)
     is_available = forms.NullBooleanField(required=False, initial=None, label=_('Available'))
-    owned = forms.NullBooleanField(required=False, initial=None, label=_(u'Pokémons in your collection'))
-    seen = forms.NullBooleanField(required=False, initial=None, label=_(u'Pokémons you\'ve seen'))
+    owned = forms.NullBooleanField(required=False, initial=None, label=_(u'Pokémon in your collection'))
+    seen = forms.NullBooleanField(required=False, initial=None, label=_(u'Pokémon you\'ve seen'))
     ordering = forms.ChoiceField(choices=[
         ('id', _(u'Pokémon number')),
         ('name', _(u'Pokémon name')),

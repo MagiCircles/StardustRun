@@ -47,7 +47,7 @@ Get Started
   python manage.py migrate
   ```
 
-- Create the initial database of pokémons (optional)
+- Create the initial database of Pokémon (optional)
 
   ```shell
   pip install beautifulsoup4

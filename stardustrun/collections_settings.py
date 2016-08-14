@@ -10,7 +10,7 @@ from stardustrun import models, forms
 # Users
 
 _profile_tabs = [
-    ('Pokemons', _(u'Pokémons')),
+    ('Pokemon', _(u'Pokémon')),
     ('Pokedex', _(u'Pokédex')),
     ('Medals', _('Medals')),
 ]
@@ -61,7 +61,7 @@ def pokemonsExtraContext(context):
     if 'get_started' in request.GET:
         context['get_started'] = True
     if context['is_last_page']:
-        context['share_sentence'] = _(u'Check out my awesome collection of Pokémons!')
+        context['share_sentence'] = _(u'Check out my awesome collection of Pokémon!')
     if 'ordering' in request.GET:
         context['ordering'] = request.GET['ordering']
     if 'type' in request.GET and request.GET['type']:

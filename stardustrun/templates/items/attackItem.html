@@ -16,7 +16,7 @@
       {% if attack.is_special %}<th>{% trans 'Critical Hit Chance' %}</th>{% endif %}
       {% if attack.is_special %}<th>{% trans 'Energy Requirement' %}</th>{% endif %}
       <td rowspan="2" class="attack-buttons">
-	<a href="/pokemons/?attack={{ attack.id }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'All Pokémons with this attack' %}" target="_blank"><i class="flaticon-album"></i></a>
+	<a href="/pokemons/?attack={{ attack.id }}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'All Pokémon with this attack' %}" target="_blank"><i class="flaticon-album"></i></a>
 	{% if in_full_pokemon %}
 	<a href="/attacks/" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" title="{% trans 'All Attacks' %}" target="_blank"><i class="flaticon-index"></i></a>
 	{% endif %}
