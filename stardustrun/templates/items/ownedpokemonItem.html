@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load tools %}
 {% load web_tags %}
+{% load l10n %}
 {% with op=item %}
 <div class="ownedpokemon" id="ownedpokemon{{ op.id }}" data-ownedpokemon-id="{{ op.id }}" data-ownedpokemon-account-id="{{ op.account_id }}">
   <span class="cp-title">{% trans 'CP' %}</span> <span class="cp">{% if op.cp %}{{ op.cp }}{% else %}??{% endif %}</span>
@@ -8,6 +9,16 @@
     <img src="{{ op.cached_pokemon.image }}" alt="{% trans op.cached_pokemon.name %}" class="img-responsive">
   </a>
   <h5 class="pokemon-nickname">{{ op.force_nickname }}</h5>
+  {% if op.progress_percent %}
+  <div class="progress-wrapper" data-toggle="tooltip" data-trigger="hover" data-placement="top" title="{% trans 'Max CP' %}: {{ op.max_cp }}">
+    <div class="progress">
+      <div class="progress-bar progress-bar-main"
+	   role="progressbar"
+	   style="width: {% localize off %}{{ op.progress_percent }}{% endlocalize %}%;">
+      </div>
+    </div>
+  </div>
+  {% endif %}
   <div class="text-center">
     {% if op.is_mine %}<a href="/ownedpokemons/edit/{{ op.id }}/{% if back_to_profile %}?back_to_profile{% endif %}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{% trans 'Edit' %} {{ op.force_nickname }}" data-ajax-url="/ajax/ownedpokemons/edit/{{ op.id }}/" data-ajax-handle-form="true" data-ajax-title="{{ op.force_nickname }}"><i class="flaticon-edit"></i></a>{% endif %}
     {% if op.is_mine and op.can_evolve %}<a href="/evolve/{{ op.id }}/{% if back_to_profile %}?back_to_profile{% endif %}" class="btn-pokemon" data-toggle="tooltip" data-trigger="hover" data-placement="bottom" title="{% trans 'Evolve' %} {{ op.force_nickname }}" data-ajax-url="/ajax/evolve/{{ op.id }}/" data-ajax-handle-form="true" data-ajax-title="{{ op.force_nickname }}"><i class="flaticon-toggler"></i></a>{% endif %}

@@ -124,6 +124,8 @@ def pokemonFullItemContext(context):
                     account.in_pokedex = account.in_pokedex[0]
                 else:
                     account.in_pokedex = models.Pokedex.objects.create(account=account, pokemon=context['item'])
+            for op in account.all_pokemons:
+                op.progress_percent = (op.cp / op.max_cp) * 100 if op.cp else 0
     elif context['tab'] == 'evolutions':
         pass
     elif context['tab'] == 'attacks':
@@ -144,6 +146,7 @@ def ownedPokemonRedirectAfter(request, item, ajax=False):
 
 def foreachOwnedPokemon(index, item, context):
     item.is_mine = context['request'].user.id == item.cached_account.owner.id
+    item.progress_percent = (item.cp / item.max_cp) * 100 if item.cp else 0
 
 def ownedPokemonsExtraContext(context):
     request = context['request']
