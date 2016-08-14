@@ -339,7 +339,7 @@ class OwnedPokemon(ItemModel):
     _cache_attack_name = models.CharField(max_length=100, null=True)
     _cache_special_attack_name = models.CharField(max_length=100, null=True)
     _cache_can_evolve = models.NullBooleanField(default=None)
-    _cache_max_cp = models.PositiveIntegerField(null=True)
+    _cache_max_cp = models.PositiveIntegerField(null=True, db_index=True)
 
     def update_cache_attacks(self):
         """
