@@ -10,7 +10,7 @@ from stardustrun import models, forms
 # Users
 
 _profile_tabs = [
-    ('Pokemon', _(u'Pokémon')),
+    ('Pokemons', _(u'Pokémon')),
     ('Pokedex', _(u'Pokédex')),
     ('Medals', _('Medals')),
 ]
