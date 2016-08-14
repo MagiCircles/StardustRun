@@ -160,7 +160,7 @@ ENABLED_COLLECTIONS['ownedpokemon'] = {
     'plural_title': _(u'Pokémon'),
     'navbar_link': False,
     'list': {
-        'default_ordering': '-cp',
+        'default_ordering': '-cp,-_cache_max_cp',
         'foreach_items': collections.foreachOwnedPokemon,
         'page_size': 48,
         'per_line': 4,
@@ -168,6 +168,9 @@ ENABLED_COLLECTIONS['ownedpokemon'] = {
         'filter_queryset': filters.filterOwnedPokemons,
         'extra_context': collections.ownedPokemonsExtraContext,
         'ajax_pagination_callback': 'loadToolTips',
+        'filter_form': forms.FilterOwnedPokemonsForm,
+        'js_files': ['ownedpokemons'],
+        'before_template': 'include/ownedPokemonsBeforeTemplate',
     },
     'edit': {
         'form_class': forms.EditOwnedPokemonForm,

@@ -57,6 +57,15 @@ def filterOwnedPokemons(queryset, parameters, request):
         queryset = queryset.filter(id__in=parameters['ids'].split(','))
     else:
         raise PermissionDenied()
+    if 'search' in parameters and parameters['search']:
+        terms = parameters['search'].split(' ')
+        for term in terms:
+            queryset = queryset.filter(Q(pokemon__name__icontains=term)
+                                       | Q(pokemon__types_string__icontains=term)
+                                       | Q(nickname__icontains=term)
+            )
+    if 'type' in parameters and parameters['type']:
+        queryset = queryset.filter(pokemon__types_string__contains='"{}"'.format(parameters['type']))
     return queryset
 
 ############################################################

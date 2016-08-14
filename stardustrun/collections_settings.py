@@ -148,6 +148,7 @@ def foreachOwnedPokemon(index, item, context):
 def ownedPokemonsExtraContext(context):
     request = context['request']
     context['back_to_profile'] = 'back_to_profile' in request.GET
+    context['pokemon_types'] = models.POKEMON_TYPES_DICT
 
 ############################################################
 # Attacks

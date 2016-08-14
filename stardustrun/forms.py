@@ -257,3 +257,25 @@ class EvolveOwnedPokemonForm(FormWithRequest):
     class Meta:
         model = models.OwnedPokemon
         fields = ('evolve_to', 'cp', 'hp', 'weight', 'height')
+
+class FilterOwnedPokemonsForm(FormWithRequest):
+    search = forms.CharField(required=False)
+    account = forms.IntegerField(widget=forms.HiddenInput, min_value=0, required=True)
+    type = forms.ChoiceField(choices=BLANK_CHOICE_DASH + list(models.POKEMON_TYPES_DATABASE_CHOICES), required=False)
+    ordering = forms.ChoiceField(choices=[
+        ('cp,_cache_max_cp', _('CP')),
+        ('nickname,pokemon__name', _('Nickname')),
+        ('pokemon_id', _(u'Pokémon number')),
+        ('hp', _('HP')),
+        ('weight', _('Weight')),
+        ('height', _('Height')),
+    ], initial='cp,_cache_max_cp', required=False)
+    reverse_order = forms.BooleanField(initial=True, required=False)
+
+    def __init__(self, *args, **kwargs):
+        super(FilterOwnedPokemonsForm, self).__init__(*args, **kwargs)
+        self.fields['account'].initial = self.request.GET.get('account', 1)
+
+    class Meta:
+        model = models.Attack
+        fields = ('search', 'type', 'ordering', 'reverse_order')
