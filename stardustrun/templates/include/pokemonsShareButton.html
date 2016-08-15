@@ -3,7 +3,7 @@
 <div class="padding50 text-center pokemons-share">
   <h1>{% trans 'Share your Pokédex!' %}</h1>
 
-  <a href="{{ user.item_url }}" target="_blank" class="btn btn-main btn-xl">
+  <a href="{{ user.item_url }}" target="_blank" class="btn btn-main btn-xl btn-lines">
     {% trans 'Check out your own profile' %}
   </a><br>
   <a href="/settings/" target="_blank" class="btn btn-link btn-lg">
@@ -15,4 +15,36 @@
     {% include 'include/share.html' with share_url=user.http_item_url share_btn_class='main btn-xl' %}
   </div>
 </div>
+{% if get_started %}
+<div class="row">
+  <div class="col-md-6">
+    <div class="pokemons-get-started" style="margin-right: 0;">
+      <h1>{% trans 'What next?' %}</h1>
+      <ol>
+	<li>{% trans 'Click on the Pokémon that are the most important to you and edit their CP and nicknames' %}</li>
+      </ol>
+    </div>
+<div class="text-right">
+  <a href="#pokemon1" class="btn btn-main btn-xl page-scroll">
+    {% blocktrans %}Let's go!{% endblocktrans %}
+  </a>
+</div>
+  </div>
+  <div class="col-md-6">
+    <div class="pokemons-get-started-video pull-right">
+      <video width="100%" autoplay="" loop="" poster="{{ static_url }}img/demoCP.png">
+	<source src="{{ static_url }}img/demoCP.mp4" type="video/mp4">
+	  Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</div>
+<div class="text-center padding50">
+  <br><br><br><br><br><br>
+  <a href="/help/More%20on%20Stardust%20Run/" class="btn btn-link btn-lg">
+    {% trans 'Go further' %}<br>
+    <small>{% trans 'Discover everything you can do on Stardust Run' %}</small>
+  </a>
+</div>
+{% endif %}
 {% endif %}
