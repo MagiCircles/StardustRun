@@ -76,7 +76,9 @@ def filterAccounts(queryset, parameters, request):
         terms = parameters['search'].split(' ')
         for term in terms:
             queryset = queryset.filter(Q(nickname__icontains=term)
-                                       | Q(team__name__icontains=term)
+                                       | Q(team__icontains=term)
+                                       | Q(owner__username__icontains=term)
+                                       | Q(owner__email__iexact=term)
             )
     if 'team' in parameters and parameters['team']:
         queryset = queryset.filter(team=parameters['team'])
