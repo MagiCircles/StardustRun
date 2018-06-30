@@ -79,7 +79,13 @@ def import_serebii(args):
             image = tds[1].find('img')
             image = 'http://serebii.net' + image.get('src')
             if 'noimages' not in args:
-                data['image'] = downloadImage(image, True)
+                # Check if pokemon already has an image before downloading it
+                try:
+                    pokemon = models.Pokemon.objects.get(id=id)
+                except models.Pokemon.DoesNotExist:
+                    pokemon = None
+                if not pokemon or not pokemon.image:
+                    data['image'] = downloadImage(image, True)
             i = tds[3].find_all('i')
             if i:
                 if i[0].text == 'Not currently available':
