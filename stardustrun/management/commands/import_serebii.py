@@ -123,7 +123,7 @@ def import_serebii(args):
             attacks = tds[i].find_all('a')
             for attack in attacks:
                 attack = attack.text.strip()
-                attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
+                attack = attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
                 if not attack:
                     continue
                 attack, _ = models.Attack.objects.get_or_create(name=attack)
@@ -132,7 +132,7 @@ def import_serebii(args):
             special_attacks = tds[i].find_all('a')
             for attack in special_attacks:
                 attack = attack.text.strip()
-                attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
+                attack = attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
                 if not attack:
                     continue
                 attack, _ = models.Attack.objects.get_or_create(name=attack, defaults={ 'is_special': True })
