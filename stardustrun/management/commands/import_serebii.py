@@ -61,17 +61,21 @@ def import_serebii(args):
         owner = models.User.objects.create(username='db0')
         preferences = UserPreferences.objects.create(user=owner)
     soup = BeautifulSoup(f.read(), 'html5lib')
-    trs = soup.find_all('tr')
+    pokemon_table = soup.find_all('table', {'class': 'tab', 'align': 'center'})[1]
+    trs = pokemon_table.find_all('tr')
     evolutions = []
     evolution_of = None
+    previous_id = 0
     for tr in trs:
         tds = tr.find_all('td')
-        if len(tds) == 22:
+        if len(tds) == 21:
             data = {
                 'owner': owner,
                 'evolution_of': evolution_of,
             }
             id = int(tds[0].text.strip().replace('#', ''))
+            if previous_id == id:
+                print '!!! Not adding duplicate', tds[3].text.strip()
             image = tds[1].find('img')
             image = 'http://serebii.net' + image.get('src')
             if 'noimages' not in args:
@@ -94,12 +98,13 @@ def import_serebii(args):
                 if key in statsDB:
                     data[statsDB[key]] = value
                 i += 2
+            # Information about evolution candies not listed under cerebi anymore
             candies = tds[i].text.strip()
             for choice in dict(models.CANDIES_CHOICES).keys():
                 if candies.startswith(str(choice)):
                     data['evolution_candies'] = choice
                     break
-            i += 1
+            #i += 1
             egg = tds[i].text.strip()
             if egg != 'Not in Eggs':
                 for choice in dict(models.EGGS_CHOICES).keys():
@@ -130,6 +135,7 @@ def import_serebii(args):
             else:
                 evolution_of = None
             print u'Added #{} {}'.format(pokemon.id, pokemon.name)
+            previous_id = pokemon.id
     print 'Manually set evolution for other evee evolutions'
     models.Pokemon.objects.filter(pk__in=[134, 135, 136]).update(evolution_of_id=133)
 
@@ -150,11 +156,14 @@ def import_serebii(args):
                 'is_special': len(tds) == 7,
             }
             data['type'] = tds[1].find('img').get('src').strip().replace('/pokedex-bw/type/', '').replace('.gif', '')
-            data['damage'] = int(tds[2].text.strip())
+            data['damage'] = int(tds[2].text.strip() or '0')
             data['duration'] = float(tds[4].text.replace('seconds', '').strip())
             if data['is_special']:
                 data['critical_hit_chance'] = int(tds[3].text.replace('%', '').strip())
-                data['energy_requirement'] = int(tds[5].find('img').get('src').strip().replace('energy.png', ''))
+                try:
+                    data['energy_requirement'] = int(tds[5].find('img').get('src').strip().replace('energy.png', ''))
+                except AttributeError:
+                    pass
             else:
                 data['energy_increase'] = int(tds[3].text.strip())
             attack, created = models.Attack.objects.update_or_create(name=name, defaults=data)
