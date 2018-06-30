@@ -27,14 +27,18 @@
     </tr>
     <tr>
       {% if attack.is_special %}<td><i class="fontx1-5 flaticon-idolized"></i></td>{% endif %}
-      <td>{{ attack.damage }}</td>
-      <td>{{ attack.duration }} {% trans 'seconds' %}</td>
-      {% if not attack.is_special %}<td>{{ attack.energy_increase }}</td>{% endif %}
-      {% if attack.is_special %}<td>{{ attack.critical_hit_chance }}%</td>{% endif %}
+      <td>{{ attack.damage|default_if_none:"?" }}</td>
+      <td>{{ attack.duration|default_if_none:"?" }} {% trans 'seconds' %}</td>
+      {% if not attack.is_special %}<td>{{ attack.energy_increase|default_if_none:"?" }}</td>{% endif %}
+      {% if attack.is_special %}<td>{{ attack.critical_hit_chance|default_if_none:"?" }}%</td>{% endif %}
       {% if attack.is_special %}<td>
+    {% if attack.energy_requirement %}
 	{% for _ in attack.energy_requirement|get_range %}
 	<div class="label label-info"></div>
 	{% endfor %}
+    {% else %}
+    ?
+    {% endif %}
       </td>{% endif %}
     </tr>
   </table>
