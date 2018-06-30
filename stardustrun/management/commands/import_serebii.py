@@ -76,6 +76,7 @@ def import_serebii(args):
             id = int(tds[0].text.strip().replace('#', ''))
             if previous_id == id:
                 print '!!! Not adding duplicate', tds[3].text.strip()
+                continue
             image = tds[1].find('img')
             image = 'http://serebii.net' + image.get('src')
             if 'noimages' not in args:
@@ -122,12 +123,18 @@ def import_serebii(args):
             attacks = tds[i].find_all('a')
             for attack in attacks:
                 attack = attack.text.strip()
+                attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
+                if not attack:
+                    continue
                 attack, _ = models.Attack.objects.get_or_create(name=attack)
                 all_attacks.append(attack)
             i = i + 1
             special_attacks = tds[i].find_all('a')
             for attack in special_attacks:
                 attack = attack.text.strip()
+                attack.replace('Mudslap', 'Mud Slap').replace('Ice Puncj', 'Ice Punch').replace('Overhead', 'Overheat')
+                if not attack:
+                    continue
                 attack, _ = models.Attack.objects.get_or_create(name=attack, defaults={ 'is_special': True })
                 all_attacks.append(attack)
             pokemon, _ = models.Pokemon.objects.update_or_create(id=id, defaults=data)
