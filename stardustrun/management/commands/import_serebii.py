@@ -112,6 +112,10 @@ def import_serebii(args):
                     data['evolution_candies'] = choice
                     break
             #i += 1
+            # If I want to get evolution from API:
+            # 1. Get specie details: https://pokeapi.co/api/v2/pokemon-species/{pokemon id}/
+            # 2. From there get evolution_chain
+            # 3. chain.evolves_to is a list, then inside each access evolves_to etc to get the tree
             egg = tds[i].text.strip()
             if egg != 'Not in Eggs':
                 for choice in dict(models.EGGS_CHOICES).keys():

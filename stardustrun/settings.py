@@ -51,6 +51,20 @@ JAVASCRIPT_TRANSLATED_TERMS += [
 
 EMPTY_IMAGE = 'pokeball_empty.png'
 
+ACTIVITY_TAGS = [
+    ('pokemon', _(u'Pokémon')),
+    ('medal', _('Medal')),
+    ('gym', _('Gym')),
+    ('comedy', _('Comedy')),
+    ('introduction', _('Introduce yourself')),
+    ('cosplay', _('Cosplay')),
+    ('fanart', _('Fan made')),
+    ('merch', _('Merchandise')),
+    ('community', _('Community')),
+    ('PetiteIdolStudio', 'PetiteIdolStudioSummer'),
+    ('unrelated', _('Unrelated')),
+]
+
 ON_USER_EDITED = utils.onUserEdited
 ON_PREFERENCES_EDITED = utils.onPreferencesEdited
 
