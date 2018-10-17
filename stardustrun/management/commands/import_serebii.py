@@ -51,7 +51,7 @@ statsDB = {
 def import_serebii(args):
 
     if 'local' in args:
-        f = open('pokemons.html', 'r')
+        f = open('pokemon.shtml', 'r')
     else:
         f = urllib2.urlopen('http://serebii.net/pokemongo/pokemon.shtml')
 
@@ -101,7 +101,7 @@ def import_serebii(args):
             for stats_tr in tds[5].find_all('tr'):
                 stat_tds = stats_tr.find_all('td')
                 key = stat_tds[0].text
-                value = int(stat_tds[1].text.replace('%', ''))
+                value = float(stat_tds[1].text.replace('%', ''))
                 if key in statsDB:
                     data[statsDB[key]] = value
                 i += 2
